@@ -5,26 +5,39 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iframe Page</title>
   <meta name="robots" content="noindex">
-  <title>Main Page</title>
+
   <style>
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-      padding: 10px;
+      background-color: black;
+      color: #fff;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
     }
+
   </style>
+  <script>
+    let g = new URL(window.location.href);
+    let params = new URLSearchParams(g.search);
+
+    const searchId = params.get("searchId");
+    if (searchId) {
+      localStorage.setItem("searchId", searchId);
+    }
+    console.log("params", searchId);
+
+  </script>
 </head>
 
 <body>
   <h1>
-    Main Page LocalStorage <br />
+    Iframe LocalStorage <br />
     <button id="refreshEl">Reload Storage</button> <br />
     <input id="nameField" type="text" name="name" />
     <button id="saveId">Save ID</button>
     <button id="saveName">Save Name</button> <br />
   </h1>
   <div id="logs"></div>
-  <iframe src="https://iframe-storage-child.vercel.app" style="width: 540px; height: 400px;"></iframe>
 
   <script>
     const refreshEl = document.getElementById("refreshEl");
@@ -42,6 +55,7 @@
       logEl.innerHTML = data;
     };
     refreshEl.addEventListener("click", loadLocalstorage);
+
     saveId.addEventListener("click", function () {
       if (nameField.value) {
         localStorage.setItem("id", nameField.value);
